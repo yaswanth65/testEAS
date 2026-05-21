@@ -36,15 +36,17 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/your-project-id",
+      "url": "https://u.expo.dev/87343a75-7a16-46dd-a54a-405ea11e37f2",
       "enabled": true,
       "fallbackToCacheTimeout": 0,
       "checkAutomatically": "ON_LOAD"
     },
     "extra": {
+      "router": {},
       "eas": {
-        "projectId": "your-project-id"
+        "projectId": "87343a75-7a16-46dd-a54a-405ea11e37f2"
       }
-    }
+    },
+    "owner": "yaswanth_kancharla"
   }
 }

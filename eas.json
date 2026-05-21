@@ -15,17 +15,11 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_UNSPLASH_ACCESS_KEY": ""
       }
     },
     "production": {
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_UNSPLASH_ACCESS_KEY": ""
       }
     }
   },
