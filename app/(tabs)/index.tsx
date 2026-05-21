@@ -9,6 +9,7 @@ import CategoryChips from "../../components/CategoryChips";
 import HeroBanner from "../../components/HeroBanner";
 import FloatingSearchBar from "../../components/FloatingSearchBar";
 import { HomeSkeleton } from "../../components/SkeletonLoader";
+import { COLORS } from "../../constants/theme";
 import type { UnsplashPhoto } from "../../types";
 
 export default function CyberHomeScreen() {
@@ -44,18 +45,12 @@ export default function CyberHomeScreen() {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const headerOpacity = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [1, 0.8],
-    extrapolate: "clamp",
-  });
-
   if (isLoading) return <HomeSkeleton />;
 
   return (
-    <View className="flex-1" style={{ backgroundColor: "#0A0A0F" }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
       <ScrollView
-        className="flex-1"
+        style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -66,58 +61,38 @@ export default function CyberHomeScreen() {
             progressBackgroundColor="#1A1A2E"
           />
         }
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
-        )}
         scrollEventThrottle={16}
         onScrollEndDrag={handleLoadMore}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        <Animated.View style={{ opacity: headerOpacity }}>
-          <View className="px-4 pt-16 pb-1">
-            <View className="flex-row items-center justify-between">
-              <View>
-                <Text className="text-3xl font-bold tracking-tight" style={{ color: "white" }}>Gallery</Text>
-                <Text className="text-sm tracking-wide mt-0.5" style={{ color: "#8B8BA0" }}>
-                  Discover cyber art
-                </Text>
-              </View>
-              <View
-                className="w-10 h-10 rounded-full items-center justify-center"
-                style={{ backgroundColor: "rgba(139, 92, 246, 0.15)", borderWidth: 1, borderColor: "rgba(139, 92, 246, 0.2)" }}
-              >
-                <Ionicons name="sparkles" size={18} color="#A78BFA" />
-              </View>
+        <View style={{ paddingHorizontal: 16, paddingTop: 64, paddingBottom: 4 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <View>
+              <Text style={{ color: "#FFFFFF", fontSize: 30, fontWeight: "bold", letterSpacing: -0.5 }}>Gallery</Text>
+              <Text style={{ color: "#8B8BA0", fontSize: 14, marginTop: 2 }}>Discover cyber art</Text>
+            </View>
+            <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: "rgba(139, 92, 246, 0.15)", borderWidth: 1, borderColor: "rgba(139, 92, 246, 0.2)", alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="sparkles" size={18} color="#A78BFA" />
             </View>
           </View>
-        </Animated.View>
+        </View>
 
         <FloatingSearchBar onPress={() => router.push("/(tabs)/search")} />
         <CategoryChips selected={selectedCategory} onSelect={setSelectedCategory} />
         <HeroBanner photo={heroPhoto} />
 
-        <View className="px-4 mb-3 flex-row items-center justify-between">
-          <Text className="text-sm font-bold tracking-widest" style={{ color: "#C4B5FD" }}>EXPLORE</Text>
-          <View className="flex-row items-center gap-1">
-            <View className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "#8B5CF6" }} />
-            <View className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "rgba(139, 92, 246, 0.4)" }} />
-            <View className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "rgba(139, 92, 246, 0.2)" }} />
+        <View style={{ paddingHorizontal: 16, marginBottom: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={{ color: "#C4B5FD", fontSize: 13, fontWeight: "bold", letterSpacing: 3 }}>EXPLORE</Text>
+          <View style={{ flexDirection: "row", gap: 4 }}>
+            <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#8B5CF6" }} />
+            <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(139, 92, 246, 0.4)" }} />
+            <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(139, 92, 246, 0.2)" }} />
           </View>
         </View>
 
-        <MasonryGrid
-          photos={photos}
-          onPhotoPress={handlePhotoPress}
-          onLike={handleLike}
-          isFav={checkIsFavorite}
-        />
+        <MasonryGrid photos={photos} onPhotoPress={handlePhotoPress} onLike={handleLike} isFav={checkIsFavorite} />
 
-        {isFetchingNextPage && (
-          <View className="py-4 items-center">
-            <ActivityIndicator size="small" color="#A78BFA" />
-          </View>
-        )}
+        {isFetchingNextPage && <View style={{ paddingVertical: 16, alignItems: "center" }}><ActivityIndicator size="small" color="#A78BFA" /></View>}
       </ScrollView>
     </View>
   );

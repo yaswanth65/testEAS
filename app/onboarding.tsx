@@ -1,33 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import Animated, { FadeIn, FadeInDown, FadeInUp } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("window");
-
 const ONBOARDING_KEY = "@onboarding_complete";
 
 const slides = [
-  {
-    icon: "sparkles",
-    title: "AI Wallpapers",
-    subtitle: "Discover stunning AI-generated cyberpunk wallpapers curated just for you.",
-    color: "#8B5CF6",
-  },
-  {
-    icon: "infinite",
-    title: "Endless Exploration",
-    subtitle: "Scroll through infinite wallpapers. Find your perfect aesthetic.",
-    color: "#3B82F6",
-  },
-  {
-    icon: "heart",
-    title: "Save & Share",
-    subtitle: "Like your favorites, share with friends, download for offline use.",
-    color: "#EC4899",
-  },
+  { icon: "sparkles", title: "AI Wallpapers", subtitle: "Discover stunning AI-generated cyberpunk wallpapers curated just for you.", color: "#8B5CF6" },
+  { icon: "infinite", title: "Endless Exploration", subtitle: "Scroll through infinite wallpapers. Find your perfect aesthetic.", color: "#3B82F6" },
+  { icon: "heart", title: "Save & Share", subtitle: "Like your favorites, share with friends, download for offline use.", color: "#EC4899" },
 ];
 
 export default function OnboardingScreen() {
@@ -43,70 +26,32 @@ export default function OnboardingScreen() {
   const isLast = step === slides.length - 1;
 
   return (
-    <View className="flex-1" style={{ backgroundColor: "#0A0A0F" }}>
-      <Animated.View entering={FadeIn.duration(600)} className="flex-1 items-center justify-center px-8">
-        <View
-          className="w-24 h-24 rounded-full items-center justify-center mb-8"
-          style={{
-            backgroundColor: `${slide.color}15`,
-            borderWidth: 1,
-            borderColor: `${slide.color}30`,
-            shadowColor: slide.color,
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 0.3,
-            shadowRadius: 20,
-            elevation: 10,
-          }}
-        >
+    <View style={{ flex: 1, backgroundColor: "#0A0A0F" }}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 32 }}>
+        <View style={{ width: 96, height: 96, borderRadius: 48, alignItems: "center", justifyContent: "center", marginBottom: 32, backgroundColor: `${slide.color}15`, borderWidth: 1, borderColor: `${slide.color}30` }}>
           <Ionicons name={slide.icon as any} size={44} color={slide.color} />
         </View>
-        <Animated.Text
-          entering={FadeInDown.duration(500).delay(200)}
-          className="text-3xl font-bold text-center tracking-tight mb-3"
-          style={{ color: "white" }}
-        >
-          {slide.title}
-        </Animated.Text>
-        <Animated.Text
-          entering={FadeInDown.duration(500).delay(400)}
-          className="text-base text-center leading-6 tracking-wide"
-          style={{ color: "#8B8BA0" }}
-        >
-          {slide.subtitle}
-        </Animated.Text>
-      </Animated.View>
+        <Text style={{ color: "#FFFFFF", fontSize: 28, fontWeight: "bold", textAlign: "center", marginBottom: 12 }}>{slide.title}</Text>
+        <Text style={{ color: "#8B8BA0", fontSize: 16, textAlign: "center", lineHeight: 24 }}>{slide.subtitle}</Text>
+      </View>
 
-      <View className="px-8 pb-12 gap-4">
-        <View className="flex-row justify-center gap-2 mb-4">
+      <View style={{ paddingHorizontal: 32, paddingBottom: 48, gap: 16 }}>
+        <View style={{ flexDirection: "row", justifyContent: "center", gap: 8, marginBottom: 16 }}>
           {slides.map((_, i) => (
-            <View
-              key={i}
-              className="h-1.5 rounded-full"
-              style={{
-                width: i === step ? 24 : 8,
-                backgroundColor: i === step ? slide.color : "rgba(255,255,255,0.1)",
-              }}
-            />
+            <View key={i} style={{ width: i === step ? 24 : 8, height: 6, borderRadius: 3, backgroundColor: i === step ? slide.color : "rgba(255,255,255,0.1)" }} />
           ))}
         </View>
 
         <TouchableOpacity
           onPress={() => isLast ? completeOnboarding() : setStep(step + 1)}
-          className="w-full py-4 rounded-2xl items-center"
-          style={{
-            backgroundColor: `${slide.color}20`,
-            borderWidth: 1,
-            borderColor: `${slide.color}30`,
-          }}
+          style={{ width: "100%", paddingVertical: 16, borderRadius: 16, alignItems: "center", backgroundColor: `${slide.color}20`, borderWidth: 1, borderColor: `${slide.color}30` }}
         >
-          <Text className="text-base font-bold tracking-wider" style={{ color: slide.color }}>
-            {isLast ? "ENTER GALLERY" : "NEXT"}
-          </Text>
+          <Text style={{ color: slide.color, fontSize: 16, fontWeight: "bold", letterSpacing: 2 }}>{isLast ? "ENTER GALLERY" : "NEXT"}</Text>
         </TouchableOpacity>
 
         {!isLast && (
-          <TouchableOpacity onPress={completeOnboarding} className="items-center py-2">
-            <Text className="text-xs tracking-wider" style={{ color: "#555570" }}>SKIP</Text>
+          <TouchableOpacity onPress={completeOnboarding} style={{ alignItems: "center", paddingVertical: 8 }}>
+            <Text style={{ color: "#555570", fontSize: 12, letterSpacing: 1 }}>SKIP</Text>
           </TouchableOpacity>
         )}
       </View>

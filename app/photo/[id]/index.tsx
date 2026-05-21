@@ -24,103 +24,71 @@ export default function CyberPhotoDetailScreen() {
 
   if (isLoading) {
     return (
-      <View className="flex-1" style={{ backgroundColor: "#0A0A0F" }}>
-        <View className="pt-16 px-4"><ShimmerPlaceholder width={40} height={40} borderRadius={20} /></View>
-        <View className="flex-1 items-center justify-center">
-          <ShimmerPlaceholder width={width - 32} height={height * 0.5} borderRadius={16} />
-        </View>
+      <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+        <View style={{ paddingTop: 64, paddingHorizontal: 16 }}><ShimmerPlaceholder width={40} height={40} borderRadius={20} /></View>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}><ShimmerPlaceholder width={width - 32} height={height * 0.5} borderRadius={16} /></View>
       </View>
     );
   }
 
   if (!photo) {
     return (
-      <View className="flex-1 items-center justify-center" style={{ backgroundColor: "#0A0A0F" }}>
-        <Text className="text-lg font-bold" style={{ color: "white" }}>Not found</Text>
-        <TouchableOpacity onPress={() => router.back()} className="mt-4 px-6 py-3 rounded-full" style={{ backgroundColor: "rgba(139, 92, 246, 0.2)" }}>
-          <Text className="text-sm font-bold" style={{ color: "#A78BFA" }}>GO BACK</Text>
+      <View style={{ flex: 1, backgroundColor: COLORS.background, alignItems: "center", justifyContent: "center" }}>
+        <Text style={{ color: "#FFFFFF", fontSize: 18, fontWeight: "bold" }}>Not found</Text>
+        <TouchableOpacity onPress={() => router.back()} style={{ marginTop: 16, paddingHorizontal: 24, paddingVertical: 12, borderRadius: 999, backgroundColor: "rgba(139, 92, 246, 0.2)" }}>
+          <Text style={{ color: "#A78BFA", fontSize: 14, fontWeight: "bold" }}>GO BACK</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
   return (
-    <View className="flex-1" style={{ backgroundColor: "#0A0A0F" }}>
-      <View className="pt-16 px-5 pb-4 flex-row items-center justify-between">
-        <TouchableOpacity
-          onPress={() => router.back()}
-          className="w-10 h-10 rounded-full items-center justify-center"
-          style={{ backgroundColor: "rgba(20, 20, 40, 0.7)" }}
-        >
+    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+      <View style={{ paddingTop: 64, paddingHorizontal: 20, paddingBottom: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <TouchableOpacity onPress={() => router.back()} style={{ width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(20, 20, 40, 0.7)" }}>
           <Ionicons name="chevron-back" size={22} color="white" />
         </TouchableOpacity>
-        <View className="flex-row gap-3">
-          <TouchableOpacity onPress={() => toggleFavorite(photo.id)} className="w-10 h-10 rounded-full items-center justify-center"
-            style={{ backgroundColor: isFav ? "rgba(236, 72, 153, 0.2)" : "rgba(20, 20, 40, 0.7)" }}>
+        <View style={{ flexDirection: "row", gap: 12 }}>
+          <TouchableOpacity onPress={() => toggleFavorite(photo.id)} style={{ width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: isFav ? "rgba(236, 72, 153, 0.2)" : "rgba(20, 20, 40, 0.7)" }}>
             <Ionicons name={isFav ? "heart" : "heart-outline"} size={20} color={isFav ? "#EC4899" : "white"} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleShare} className="w-10 h-10 rounded-full items-center justify-center"
-            style={{ backgroundColor: "rgba(20, 20, 40, 0.7)" }}>
+          <TouchableOpacity onPress={handleShare} style={{ width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(20, 20, 40, 0.7)" }}>
             <Ionicons name="share" size={20} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity className="w-10 h-10 rounded-full items-center justify-center"
-            style={{ backgroundColor: "rgba(20, 20, 40, 0.7)" }}>
+          <TouchableOpacity style={{ width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(20, 20, 40, 0.7)" }}>
             <Ionicons name="download" size={20} color="white" />
           </TouchableOpacity>
         </View>
       </View>
 
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
-        <View className="px-4 mb-4">
-          <View className="rounded-2xl overflow-hidden" style={{ borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.15)" }}>
-            <Image
-              source={{ uri: photo.urls.regular }}
-              style={{ width: "100%", height: height * 0.45 }}
-              contentFit="cover"
-              transition={300}
-              cachePolicy="memory-disk"
-              placeholder={{ blurhash: photo.blur_hash }}
-            />
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
+        <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
+          <View style={{ borderRadius: 16, overflow: "hidden", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.15)" }}>
+            <Image source={{ uri: photo.urls.regular }} style={{ width: "100%", height: height * 0.45 }} contentFit="cover" transition={300} cachePolicy="memory-disk" placeholder={{ blurhash: photo.blur_hash }} />
           </View>
         </View>
 
-        <View className="px-4">
-          <Text className="text-xl font-bold tracking-tight mb-1" style={{ color: "white" }}>
-            {photo.alt_description || "Cyber Wallpaper"}
-          </Text>
-          <Text className="text-sm mb-4 tracking-wide" style={{ color: "#8B8BA0" }}>
-            {photo.description || "AI Wallpaper Gallery"}
-          </Text>
+        <View style={{ paddingHorizontal: 16 }}>
+          <Text style={{ color: "#FFFFFF", fontSize: 20, fontWeight: "bold", marginBottom: 4 }}>{photo.alt_description || "Cyber Wallpaper"}</Text>
+          <Text style={{ color: "#8B8BA0", fontSize: 14, marginBottom: 16 }}>{photo.description || "AI Wallpaper Gallery"}</Text>
 
-          <View
-            className="flex-row items-center gap-3 mb-6 p-4 rounded-2xl"
-            style={{ backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}
-          >
-            <Image
-              source={{ uri: photo.user.profile_image.medium }}
-              style={{ width: 44, height: 44, borderRadius: 22 }}
-              contentFit="cover"
-            />
-            <View className="flex-1">
-              <Text className="text-sm font-bold tracking-wide" style={{ color: "white" }}>{photo.user.name}</Text>
-              <Text className="text-xs" style={{ color: "#707088" }}>@{photo.user.username}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 24, padding: 16, borderRadius: 16, backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}>
+            <Image source={{ uri: photo.user.profile_image.medium }} style={{ width: 44, height: 44, borderRadius: 22 }} contentFit="cover" />
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: "#FFFFFF", fontSize: 14, fontWeight: "bold" }}>{photo.user.name}</Text>
+              <Text style={{ color: "#707088", fontSize: 12 }}>@{photo.user.username}</Text>
             </View>
           </View>
 
-          <View className="flex-row gap-3 mb-6">
-            {[
-              { value: photo.likes, label: "Likes" },
-              { value: `${photo.width}×${photo.height}`, label: "Resolution" },
-            ].map((item) => (
-              <View
-                key={item.label}
-                className="flex-1 p-3 rounded-xl items-center"
-                style={{ backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}
-              >
-                <Text className="text-lg font-bold" style={{ color: "#C4B5FD" }}>{item.value}</Text>
-                <Text className="text-[10px] mt-1 tracking-widest" style={{ color: "#707088" }}>{item.label}</Text>
-              </View>
-            ))}
+          <View style={{ flexDirection: "row", gap: 12, marginBottom: 24 }}>
+            <View style={{ flex: 1, padding: 12, borderRadius: 12, alignItems: "center", backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}>
+              <Text style={{ color: "#C4B5FD", fontSize: 18, fontWeight: "bold" }}>{photo.likes}</Text>
+              <Text style={{ color: "#707088", fontSize: 10, marginTop: 4, letterSpacing: 1 }}>LIKES</Text>
+            </View>
+            <View style={{ flex: 1, padding: 12, borderRadius: 12, alignItems: "center", backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}>
+              <Text style={{ color: "#C4B5FD", fontSize: 18, fontWeight: "bold" }}>{photo.width}x{photo.height}</Text>
+              <Text style={{ color: "#707088", fontSize: 10, marginTop: 4, letterSpacing: 1 }}>RES</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
