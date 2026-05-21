@@ -1,155 +1,102 @@
 import { View, Text, ScrollView, TouchableOpacity, Linking } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { useEffect, useState } from "react";
 
-interface UpdateInfo {
-  isUpdateAvailable: boolean;
-  updateUrl: string | null;
-}
-
-export default function ProfileScreen() {
-  const [updateInfo, setUpdateInfo] = useState<UpdateInfo>({
-    isUpdateAvailable: false,
-    updateUrl: null,
-  });
-
+export default function CyberProfileScreen() {
   const appVersion = Constants.expoConfig?.version ?? "1.0.0";
-  const buildNumber = Constants.expoConfig?.extra?.eas?.buildNumber ?? "1";
 
   const menuItems = [
-    {
-      icon: "image",
-      title: "My Wallpapers",
-      subtitle: `${24} wallpapers saved`,
-      color: "#38BDF8",
-    },
-    {
-      icon: "heart",
-      title: "Favorites",
-      subtitle: "View saved wallpapers",
-      color: "#EF4444",
-    },
-    {
-      icon: "download",
-      title: "Downloads",
-      subtitle: "Manage downloaded wallpapers",
-      color: "#22C55E",
-    },
-    {
-      icon: "shield-checkmark",
-      title: "Privacy Policy",
-      subtitle: "How we handle your data",
-      color: "#8B5CF6",
-    },
-    {
-      icon: "color-palette",
-      title: "Theme",
-      subtitle: "Dark mode only",
-      color: "#F59E0B",
-    },
-    {
-      icon: "information-circle",
-      title: "About",
-      subtitle: `Version ${appVersion} (Build ${buildNumber})`,
-      color: "#707070",
-    },
+    { icon: "image", title: "My Collection", subtitle: "24 wallpapers", color: "#8B5CF6" },
+    { icon: "heart", title: "Favorites", subtitle: "Saved wallpapers", color: "#EC4899" },
+    { icon: "download", title: "Downloads", subtitle: "Offline storage", color: "#06B6D4" },
+    { icon: "shield-checkmark", title: "Privacy", subtitle: "Data handling", color: "#22C55E" },
+    { icon: "color-palette", title: "Theme", subtitle: "Cyber dark", color: "#F59E0B" },
   ];
 
-  const handleGitHub = () => {
-    Linking.openURL("https://github.com/yaswanth65/testEAS");
-  };
-
   return (
-    <View className="flex-1 bg-dark-900">
+    <View className="flex-1" style={{ backgroundColor: "#0A0A0F" }}>
       <View className="px-4 pt-16 pb-2">
-        <Text className="text-white text-3xl font-bold">Profile</Text>
-        <Text className="text-dark-100 text-base mt-1">
-          Manage your account and settings
-        </Text>
+        <Text className="text-3xl font-bold tracking-tight" style={{ color: "white" }}>Profile</Text>
+        <Text className="text-sm tracking-wide mt-0.5" style={{ color: "#8B8BA0" }}>Cyber Gallery v{appVersion}</Text>
       </View>
 
-      <ScrollView
-        className="flex-1"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120 }}
-      >
-        {/* Profile Card */}
-        <View className="mx-4 p-5 bg-dark-800 rounded-2xl border border-dark-600 mb-4">
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
+        <View
+          className="mx-4 p-5 rounded-2xl mb-4"
+          style={{
+            backgroundColor: "rgba(20, 20, 40, 0.7)",
+            borderWidth: 1,
+            borderColor: "rgba(120, 80, 255, 0.12)",
+            shadowColor: "#8B5CF6",
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.1,
+            shadowRadius: 12,
+            elevation: 6,
+          }}
+        >
           <View className="flex-row items-center gap-4">
-            <View className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-500 to-purple-500 items-center justify-center">
-              <Ionicons name="person" size={28} color="white" />
+            <View
+              className="w-16 h-16 rounded-full items-center justify-center"
+              style={{ backgroundColor: "rgba(139, 92, 246, 0.2)", borderWidth: 2, borderColor: "rgba(139, 92, 246, 0.3)" }}
+            >
+              <Ionicons name="person" size={28} color="#A78BFA" />
             </View>
             <View className="flex-1">
-              <Text className="text-white text-lg font-bold">Wallpaper Gallery</Text>
-              <Text className="text-dark-100 text-sm">AI-Powered Wallpapers</Text>
+              <Text className="text-lg font-bold tracking-tight" style={{ color: "white" }}>Cyber Gallery</Text>
+              <Text className="text-xs tracking-wider mt-0.5" style={{ color: "#8B8BA0" }}>AI-Powered Wallpapers</Text>
             </View>
           </View>
         </View>
 
-        {/* Menu Items */}
-        <View className="mx-4 mb-4">
+        <View className="mx-4 mb-4 rounded-2xl overflow-hidden" style={{ borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}>
           {menuItems.map((item, index) => (
             <TouchableOpacity
               key={item.title}
-              className={`flex-row items-center py-4 px-4 ${
-                index === 0
-                  ? "bg-dark-800 rounded-t-2xl"
-                  : index === menuItems.length - 1
-                  ? "bg-dark-800 rounded-b-2xl border-t-0"
-                  : "bg-dark-800"
-              } ${index > 0 ? "border-t border-dark-600" : ""}`}
+              className="flex-row items-center py-4 px-5"
+              style={{
+                backgroundColor: "rgba(20, 20, 40, 0.5)",
+                borderBottomWidth: index < menuItems.length - 1 ? 1 : 0,
+                borderBottomColor: "rgba(120, 80, 255, 0.06)",
+              }}
             >
               <View
-                className="w-10 h-10 rounded-xl items-center justify-center"
-                style={{ backgroundColor: `${item.color}20` }}
+                className="w-9 h-9 rounded-xl items-center justify-center"
+                style={{ backgroundColor: `${item.color}15` }}
               >
-                <Ionicons name={item.icon} size={20} color={item.color} />
+                <Ionicons name={item.icon as any} size={18} color={item.color} />
               </View>
               <View className="flex-1 ml-3">
-                <Text className="text-white text-sm font-medium">
-                  {item.title}
-                </Text>
-                <Text className="text-dark-200 text-xs mt-0.5">
-                  {item.subtitle}
-                </Text>
+                <Text className="text-sm font-bold tracking-wide" style={{ color: "white" }}>{item.title}</Text>
+                <Text className="text-xs mt-0.5" style={{ color: "#707088" }}>{item.subtitle}</Text>
               </View>
-              <Ionicons name="chevron-forward" size={18} color="#545454" />
+              <Ionicons name="chevron-forward" size={16} color="#555570" />
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* Update Status */}
-        <View className="mx-4 p-4 bg-dark-800 rounded-2xl border border-dark-600 mb-4">
-          <Text className="text-white text-sm font-semibold mb-2">
-            OTA Update Status
-          </Text>
+        <View
+          className="mx-4 p-4 rounded-2xl mb-4"
+          style={{ backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}
+        >
+          <Text className="text-xs font-bold tracking-widest mb-2" style={{ color: "#7070A0" }}>OTA STATUS</Text>
           <View className="flex-row items-center gap-2">
-            <View className="w-2 h-2 rounded-full bg-green-500" />
-            <Text className="text-dark-100 text-xs">
-              Up to date (Channel: production)
-            </Text>
+            <View className="w-2 h-2 rounded-full" style={{ backgroundColor: "#22C55E", shadowColor: "#22C55E", shadowOpacity: 0.6, shadowRadius: 4 }} />
+            <Text className="text-xs" style={{ color: "#C4B5FD" }}>Up to date (production)</Text>
           </View>
-          <Text className="text-dark-200 text-xs mt-1">
-            Runtime: {Constants.expoConfig?.runtimeVersion ?? "1.0.0"}
-          </Text>
+          <Text className="text-[10px] mt-1" style={{ color: "#555570" }}>Runtime: {Constants.expoConfig?.runtimeVersion ?? "1.0.0"}</Text>
         </View>
 
-        {/* GitHub Button */}
         <TouchableOpacity
-          onPress={handleGitHub}
-          className="mx-4 p-4 bg-dark-800 rounded-2xl border border-dark-600 flex-row items-center gap-3"
+          onPress={() => Linking.openURL("https://github.com/yaswanth65/testEAS")}
+          className="mx-4 p-4 rounded-2xl flex-row items-center gap-3"
+          style={{ backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}
         >
-          <Ionicons name="logo-github" size={22} color="white" />
+          <Ionicons name="logo-github" size={20} color="#C4B5FD" />
           <View className="flex-1">
-            <Text className="text-white text-sm font-medium">
-              View on GitHub
-            </Text>
-            <Text className="text-dark-200 text-xs mt-0.5">
-              yaswanth65/testEAS
-            </Text>
+            <Text className="text-sm font-bold tracking-wide" style={{ color: "white" }}>GitHub</Text>
+            <Text className="text-xs mt-0.5" style={{ color: "#707088" }}>yaswanth65/testEAS</Text>
           </View>
-          <Ionicons name="chevron-forward" size={18} color="#545454" />
+          <Ionicons name="chevron-forward" size={16} color="#555570" />
         </TouchableOpacity>
       </ScrollView>
     </View>
