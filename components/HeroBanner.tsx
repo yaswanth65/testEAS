@@ -1,6 +1,6 @@
 import { Dimensions, Text, View } from "react-native";
 import { Image } from "expo-image";
-import { Sparkles } from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { BORDER_RADIUS } from "../constants/theme";
 import type { UnsplashPhoto } from "../types";
 
@@ -28,7 +28,7 @@ export default function HeroBanner({ photo }: HeroBannerProps) {
         <View className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent" />
         <View className="absolute bottom-4 left-4 right-4">
           <View className="flex-row items-center gap-2 mb-1">
-            <Sparkles size={16} color="#38BDF8" />
+            <Ionicons name="sparkles" size={16} color="#38BDF8" />
             <Text className="text-accent-300 text-xs font-semibold uppercase tracking-wider">
               Featured
             </Text>

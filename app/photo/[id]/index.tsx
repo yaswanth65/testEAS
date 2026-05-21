@@ -9,15 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { Image } from "expo-image";
-import {
-  ArrowLeft,
-  Heart,
-  Share2,
-  Download,
-  User,
-  Calendar,
-  ChevronLeft,
-} from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { usePhotoById } from "../../../hooks/useWallpapers";
 import { useFavorites } from "../../../hooks/useFavorites";
 import ShimmerPlaceholder from "../../../components/ShimmerPlaceholder";
@@ -86,30 +78,30 @@ export default function PhotoDetailScreen() {
           onPress={() => router.back()}
           className="w-10 h-10 rounded-full bg-dark-700 items-center justify-center"
         >
-          <ChevronLeft size={22} color="white" />
+          <Ionicons name="chevron-back" size={22} color="white" />
         </TouchableOpacity>
         <View className="flex-row gap-3">
           <TouchableOpacity
             onPress={() => toggleFavorite(photo.id)}
             className="w-10 h-10 rounded-full bg-dark-700 items-center justify-center"
           >
-            <Heart
+            <Ionicons
+              name={isFav ? "heart" : "heart-outline"}
               size={20}
               color={isFav ? COLORS.error : "white"}
-              fill={isFav ? COLORS.error : "transparent"}
             />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleShare}
             className="w-10 h-10 rounded-full bg-dark-700 items-center justify-center"
           >
-            <Share2 size={20} color="white" />
+            <Ionicons name="share" size={20} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleDownload}
             className="w-10 h-10 rounded-full bg-dark-700 items-center justify-center"
           >
-            <Download size={20} color="white" />
+            <Ionicons name="download" size={20} color="white" />
           </TouchableOpacity>
         </View>
       </View>

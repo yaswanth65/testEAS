@@ -1,14 +1,14 @@
 import { View, TouchableOpacity, Text } from "react-native";
-import { Home, Search, Heart, User } from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { COLORS } from "../constants/theme";
 
 const icons = {
-  index: Home,
-  search: Search,
-  favorites: Heart,
-  profile: User,
+  index: "home",
+  search: "search",
+  favorites: "heart",
+  profile: "person",
 } as const;
 
 const labels: Record<string, string> = {
@@ -28,7 +28,7 @@ export default function AnimatedTabBar({
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
-        const Icon = icons[route.name as keyof typeof icons];
+        const iconName = icons[route.name as keyof typeof icons];
 
         const onPress = () => {
           const event = navigation.emit({
@@ -51,7 +51,8 @@ export default function AnimatedTabBar({
             }`}
             style={{ minWidth: 60 }}
           >
-            <Icon
+            <Ionicons
+              name={iconName}
               size={22}
               color={isFocused ? COLORS.accent : COLORS.textTertiary}
             />

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { Heart, Trash2 } from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { getFavorites } from "../../utils/storage";
 import { getPhotoById } from "../../services/unsplash";
@@ -72,7 +72,7 @@ export default function FavoritesScreen() {
       {favoritePhotos.length === 0 ? (
         <View className="flex-1 items-center justify-center px-8">
           <View className="w-20 h-20 rounded-full bg-dark-600 items-center justify-center mb-4">
-            <Heart size={32} color="#707070" />
+            <Ionicons name="heart-outline" size={32} color="#707070" />
           </View>
           <Text className="text-white text-lg font-semibold mb-2">
             No favorites yet

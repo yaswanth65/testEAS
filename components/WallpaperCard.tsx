@@ -6,7 +6,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { Image } from "expo-image";
-import { Heart } from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import type { UnsplashPhoto } from "../types";
 import { COLORS, BORDER_RADIUS } from "../constants/theme";
 
@@ -64,10 +64,10 @@ export default function WallpaperCard({
           onPress={() => onLike(photo.id)}
           className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 items-center justify-center"
         >
-          <Heart
+          <Ionicons
+            name={isFav ? "heart" : "heart-outline"}
             size={16}
             color={isFav ? COLORS.error : "white"}
-            fill={isFav ? COLORS.error : "transparent"}
           />
         </TouchableOpacity>
       </TouchableOpacity>

@@ -1,15 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Linking } from "react-native";
-import {
-  User,
-  ChevronRight,
-  Github,
-  Info,
-  Shield,
-  Palette,
-  Image,
-  Heart,
-  Download,
-} from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
 
@@ -29,37 +19,37 @@ export default function ProfileScreen() {
 
   const menuItems = [
     {
-      icon: Image,
+      icon: "image",
       title: "My Wallpapers",
       subtitle: `${24} wallpapers saved`,
       color: "#38BDF8",
     },
     {
-      icon: Heart,
+      icon: "heart",
       title: "Favorites",
       subtitle: "View saved wallpapers",
       color: "#EF4444",
     },
     {
-      icon: Download,
+      icon: "download",
       title: "Downloads",
       subtitle: "Manage downloaded wallpapers",
       color: "#22C55E",
     },
     {
-      icon: Shield,
+      icon: "shield-checkmark",
       title: "Privacy Policy",
       subtitle: "How we handle your data",
       color: "#8B5CF6",
     },
     {
-      icon: Palette,
+      icon: "color-palette",
       title: "Theme",
       subtitle: "Dark mode only",
       color: "#F59E0B",
     },
     {
-      icon: Info,
+      icon: "information-circle",
       title: "About",
       subtitle: `Version ${appVersion} (Build ${buildNumber})`,
       color: "#707070",
@@ -88,7 +78,7 @@ export default function ProfileScreen() {
         <View className="mx-4 p-5 bg-dark-800 rounded-2xl border border-dark-600 mb-4">
           <View className="flex-row items-center gap-4">
             <View className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-500 to-purple-500 items-center justify-center">
-              <User size={28} color="white" />
+              <Ionicons name="person" size={28} color="white" />
             </View>
             <View className="flex-1">
               <Text className="text-white text-lg font-bold">Wallpaper Gallery</Text>
@@ -114,7 +104,7 @@ export default function ProfileScreen() {
                 className="w-10 h-10 rounded-xl items-center justify-center"
                 style={{ backgroundColor: `${item.color}20` }}
               >
-                <item.icon size={20} color={item.color} />
+                <Ionicons name={item.icon} size={20} color={item.color} />
               </View>
               <View className="flex-1 ml-3">
                 <Text className="text-white text-sm font-medium">
@@ -124,7 +114,7 @@ export default function ProfileScreen() {
                   {item.subtitle}
                 </Text>
               </View>
-              <ChevronRight size={18} color="#545454" />
+              <Ionicons name="chevron-forward" size={18} color="#545454" />
             </TouchableOpacity>
           ))}
         </View>
@@ -150,7 +140,7 @@ export default function ProfileScreen() {
           onPress={handleGitHub}
           className="mx-4 p-4 bg-dark-800 rounded-2xl border border-dark-600 flex-row items-center gap-3"
         >
-          <Github size={22} color="white" />
+          <Ionicons name="logo-github" size={22} color="white" />
           <View className="flex-1">
             <Text className="text-white text-sm font-medium">
               View on GitHub
@@ -159,7 +149,7 @@ export default function ProfileScreen() {
               yaswanth65/testEAS
             </Text>
           </View>
-          <ChevronRight size={18} color="#545454" />
+          <Ionicons name="chevron-forward" size={18} color="#545454" />
         </TouchableOpacity>
       </ScrollView>
     </View>

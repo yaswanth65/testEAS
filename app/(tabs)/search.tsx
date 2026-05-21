@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Dimensions,
 } from "react-native";
-import { Search, X, Clock, TrendingUp } from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useSearch } from "../../hooks/useSearch";
 import MasonryGrid from "../../components/MasonryGrid";
 import { SearchSkeleton } from "../../components/SkeletonLoader";
@@ -91,7 +91,7 @@ export default function SearchScreen() {
       </View>
 
       <View className="mx-4 mb-4 px-4 py-3 bg-dark-700 rounded-2xl flex-row items-center border border-dark-500">
-        <Search size={18} color="#707070" />
+        <Ionicons name="search" size={18} color="#707070" />
         <TextInput
           ref={inputRef}
           value={query}
@@ -106,7 +106,7 @@ export default function SearchScreen() {
         />
         {query.length > 0 && (
           <TouchableOpacity onPress={handleClear}>
-            <X size={18} color="#707070" />
+            <Ionicons name="close" size={18} color="#707070" />
           </TouchableOpacity>
         )}
       </View>
@@ -123,7 +123,7 @@ export default function SearchScreen() {
             <View>
               <View className="flex-row items-center justify-between mb-3">
                 <View className="flex-row items-center gap-2">
-                  <Clock size={16} color="#707070" />
+                  <Ionicons name="time-outline" size={16} color="#707070" />
                   <Text className="text-dark-100 text-sm font-semibold">
                     Recent Searches
                   </Text>
@@ -148,7 +148,7 @@ export default function SearchScreen() {
 
           <View className="mt-8">
             <View className="flex-row items-center gap-2 mb-3">
-              <TrendingUp size={16} color="#707070" />
+              <Ionicons name="trending-up" size={16} color="#707070" />
               <Text className="text-dark-100 text-sm font-semibold">
                 Trending Searches
               </Text>
