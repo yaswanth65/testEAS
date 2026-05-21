@@ -1,10 +1,5 @@
 import { useRef } from "react";
-import { TouchableOpacity, Text, View } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import { TouchableOpacity, Text, View, Animated } from "react-native";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import type { UnsplashPhoto } from "../types";
@@ -23,21 +18,30 @@ export default function WallpaperCard({
   onLike,
   isFav = false,
 }: WallpaperCardProps) {
-  const scale = useSharedValue(1);
+  const scale = useRef(new Animated.Value(1)).current;
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
+  const handlePressIn = () => {
+    Animated.spring(scale, {
+      toValue: 0.96,
+      useNativeDriver: true,
+    }).start();
+  };
 
-  const aspectRatio = photo.width / photo.height;
-  const cardHeight = 300 * aspectRatio;
+  const handlePressOut = () => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
-    <Animated.View style={animatedStyle} className="mb-3">
+    <Animated.View style={[{ transform: [{ scale }] }]}>
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={() => onPress(photo)}
         onLongPress={() => onLike(photo.id)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
         className="rounded-xl overflow-hidden relative"
       >
         <Image
@@ -53,10 +57,7 @@ export default function WallpaperCard({
           placeholder={{ blurhash: photo.blur_hash }}
         />
         <View className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-          <Text
-            className="text-white text-sm font-semibold"
-            numberOfLines={1}
-          >
+          <Text className="text-white text-sm font-semibold" numberOfLines={1}>
             {photo.user.name}
           </Text>
         </View>

@@ -1,12 +1,5 @@
-import { useEffect } from "react";
-import { View } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
+import { useEffect, useRef } from "react";
+import { Animated, Easing, View } from "react-native";
 
 interface ShimmerPlaceholderProps {
   width: number | string;
@@ -21,26 +14,32 @@ export default function ShimmerPlaceholder({
   borderRadius = 12,
   className = "",
 }: ShimmerPlaceholderProps) {
-  const opacity = useSharedValue(0.3);
+  const opacity = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
-    opacity.value = withRepeat(
-      withTiming(0.7, {
-        duration: 1000,
-        easing: Easing.inOut(Easing.ease),
-      }),
-      -1,
-      true
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, {
+          toValue: 0.7,
+          duration: 1000,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0.3,
+          duration: 1000,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ])
     );
-  }, []);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
+    animation.start();
+    return () => animation.stop();
+  }, [opacity]);
 
   return (
     <Animated.View
-      style={[{ width: width as any, height: height as any, borderRadius }]}
+      style={[{ width: width as any, height: height as any, borderRadius, opacity }]}
       className={`bg-dark-600 ${className}`}
     />
   );

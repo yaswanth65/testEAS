@@ -1,10 +1,10 @@
 import { Tabs } from "expo-router";
-import AnimatedTabBar from "../../components/AnimatedTabBar";
+import CustomTabBar from "../../components/AnimatedTabBar";
 
 export default function TabLayout() {
   return (
     <Tabs
-      tabBar={(props) => <AnimatedTabBar {...props} />}
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
         headerShown: false,
       }}

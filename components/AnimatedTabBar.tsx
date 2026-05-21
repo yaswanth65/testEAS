@@ -1,7 +1,6 @@
 import { View, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import Animated, { FadeInUp } from "react-native-reanimated";
 import { COLORS } from "../constants/theme";
 
 const icons = {
@@ -18,7 +17,7 @@ const labels: Record<string, string> = {
   profile: "Profile",
 };
 
-export default function AnimatedTabBar({
+export default function CustomTabBar({
   state,
   descriptors,
   navigation,
@@ -26,7 +25,6 @@ export default function AnimatedTabBar({
   return (
     <View className="absolute bottom-6 left-4 right-4 bg-dark-800/90 backdrop-blur-xl rounded-2xl border border-dark-600 flex-row items-center justify-around px-2 py-2">
       {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const iconName = icons[route.name as keyof typeof icons];
 
@@ -57,11 +55,9 @@ export default function AnimatedTabBar({
               color={isFocused ? COLORS.accent : COLORS.textTertiary}
             />
             {isFocused && (
-              <Animated.View entering={FadeInUp.duration(200)}>
-                <Text className="text-accent-400 text-xs font-medium mt-1">
-                  {labels[route.name] || route.name}
-                </Text>
-              </Animated.View>
+              <Text className="text-accent-400 text-xs font-medium mt-1">
+                {labels[route.name] || route.name}
+              </Text>
             )}
           </TouchableOpacity>
         );
