@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Linking, Dimensions } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Linking, Dimensions, Alert } from "react-native";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import * as Updates from "expo-updates";
 import { getFavorites } from "../../utils/storage";
 import { getPhotoById } from "../../services/unsplash";
 import { HomeSkeleton } from "../../components/SkeletonLoader";
@@ -17,6 +18,31 @@ export default function CyberProfileScreen() {
   const [favoritePhotos, setFavoritePhotos] = useState<UnsplashPhoto[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"grid" | "saved" | "tagged">("grid");
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+
+  const handleCheckUpdate = useCallback(async () => {
+    if (__DEV__) {
+      Alert.alert("Updates", "Not available in development mode");
+      return;
+    }
+    setCheckingUpdate(true);
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        Alert.alert("Update Available", "App will restart to apply the update.", [
+          { text: "Restart Now", onPress: () => Updates.reloadAsync() },
+          { text: "Later", style: "cancel" },
+        ]);
+      } else {
+        Alert.alert("Up to Date", "You are on the latest version.");
+      }
+    } catch (e) {
+      Alert.alert("Error", "Could not check for updates.");
+    } finally {
+      setCheckingUpdate(false);
+    }
+  }, []);
 
   const loadFavorites = useCallback(async () => {
     setLoading(true);
@@ -162,11 +188,20 @@ export default function CyberProfileScreen() {
         {/* OTA Status */}
         <View style={{ marginHorizontal: 16, marginTop: 16, padding: 16, borderRadius: 16, backgroundColor: "rgba(20, 20, 40, 0.5)", borderWidth: 1, borderColor: "rgba(120, 80, 255, 0.08)" }}>
           <Text style={{ color: "#7070A0", fontSize: 11, fontWeight: "bold", letterSpacing: 2, marginBottom: 8 }}>OTA STATUS</Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 8 }}>
             <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: "#22C55E" }} />
             <Text style={{ color: "#C4B5FD", fontSize: 13 }}>Up to date (production)</Text>
           </View>
           <Text style={{ color: "#555570", fontSize: 10, marginTop: 4 }}>Runtime: {Constants.expoConfig?.runtimeVersion ?? "1.0.0"}</Text>
+          <TouchableOpacity
+            onPress={handleCheckUpdate}
+            disabled={checkingUpdate}
+            style={{ marginTop: 12, paddingVertical: 10, borderRadius: 10, alignItems: "center", backgroundColor: "rgba(139, 92, 246, 0.15)", borderWidth: 1, borderColor: "rgba(139, 92, 246, 0.25)" }}
+          >
+            <Text style={{ color: "#A78BFA", fontSize: 13, fontWeight: "bold" }}>
+              {checkingUpdate ? "Checking..." : "Check for Updates"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* GitHub Link */}

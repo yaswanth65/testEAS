@@ -5,7 +5,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Text, Animated } from "react-native";
+import { View, Text, Alert } from "react-native";
+import * as Updates from "expo-updates";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,15 +21,32 @@ const ONBOARDING_KEY = "@onboarding_complete";
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
 
   useEffect(() => {
     async function prepare() {
+      // Check for OTA updates
+      try {
+        if (!__DEV__) {
+          const update = await Updates.checkForUpdateAsync();
+          if (update.isAvailable) {
+            setUpdateMessage("Downloading update...");
+            await Updates.fetchUpdateAsync();
+            setUpdateMessage("Update ready! Restarting...");
+            await Updates.reloadAsync();
+            return;
+          }
+        }
+      } catch (e) {
+        console.log("Update check error:", e);
+      }
+
       const done = await AsyncStorage.getItem(ONBOARDING_KEY);
       setShowOnboarding(!done);
       await SplashScreen.hideAsync();
       setIsReady(true);
     }
-    setTimeout(prepare, 800);
+    setTimeout(prepare, 600);
   }, []);
 
   if (!isReady) {
@@ -53,6 +71,9 @@ export default function RootLayout() {
         >
           <Text style={{ fontSize: 24, color: "#A78BFA" }}>✦</Text>
         </View>
+        {updateMessage && (
+          <Text style={{ color: "#A78BFA", fontSize: 12, marginTop: 16, fontWeight: "600" }}>{updateMessage}</Text>
+        )}
       </View>
     );
   }
@@ -65,6 +86,8 @@ export default function RootLayout() {
           {showOnboarding && <Stack.Screen name="onboarding" />}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="photo/[id]" options={{ headerShown: false, presentation: "fullScreenModal" }} />
+          <Stack.Screen name="camera" options={{ headerShown: false, presentation: "modal" }} />
+          <Stack.Screen name="messages" options={{ headerShown: false, presentation: "modal" }} />
         </Stack>
       </GestureHandlerRootView>
     </QueryClientProvider>
