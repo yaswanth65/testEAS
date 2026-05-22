@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef } from "react";
-import { View, Text, ScrollView, RefreshControl, ActivityIndicator, Animated } from "react-native";
+import { View, Text, ScrollView, RefreshControl, ActivityIndicator, Animated, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useCuratedPhotos } from "../../hooks/useWallpapers";
@@ -8,6 +8,7 @@ import MasonryGrid from "../../components/MasonryGrid";
 import CategoryChips from "../../components/CategoryChips";
 import HeroBanner from "../../components/HeroBanner";
 import FloatingSearchBar from "../../components/FloatingSearchBar";
+import StoriesRing from "../../components/StoriesRing";
 import { HomeSkeleton } from "../../components/SkeletonLoader";
 import { COLORS } from "../../constants/theme";
 import type { UnsplashPhoto } from "../../types";
@@ -49,6 +50,22 @@ export default function CyberHomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+      {/* Instagram-style top nav */}
+      <View style={{ paddingHorizontal: 16, paddingTop: 56, paddingBottom: 8, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 0.5, borderBottomColor: "rgba(120,80,255,0.08)" }}>
+        <TouchableOpacity onPress={() => router.push("/camera")}>
+          <Ionicons name="camera-outline" size={26} color="#FFFFFF" />
+        </TouchableOpacity>
+        <Text style={{ color: "#FFFFFF", fontSize: 22, fontWeight: "bold", letterSpacing: -0.5 }}>CyberGram</Text>
+        <TouchableOpacity onPress={() => router.push("/messages")}>
+          <View style={{ position: "relative" }}>
+            <Ionicons name="paper-plane-outline" size={24} color="#FFFFFF" />
+            <View style={{ position: "absolute", top: -4, right: -4, width: 16, height: 16, borderRadius: 8, backgroundColor: "#EC4899", alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: "#0A0A0F" }}>
+              <Text style={{ color: "#FFF", fontSize: 8, fontWeight: "bold" }}>3</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView
         style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
@@ -65,18 +82,7 @@ export default function CyberHomeScreen() {
         onScrollEndDrag={handleLoadMore}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        <View style={{ paddingHorizontal: 16, paddingTop: 64, paddingBottom: 4 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <View>
-              <Text style={{ color: "#FFFFFF", fontSize: 30, fontWeight: "bold", letterSpacing: -0.5 }}>Gallery</Text>
-              <Text style={{ color: "#8B8BA0", fontSize: 14, marginTop: 2 }}>Discover cyber art</Text>
-            </View>
-            <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: "rgba(139, 92, 246, 0.15)", borderWidth: 1, borderColor: "rgba(139, 92, 246, 0.2)", alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name="sparkles" size={18} color="#A78BFA" />
-            </View>
-          </View>
-        </View>
-
+        <StoriesRing />
         <FloatingSearchBar onPress={() => router.push("/(tabs)/search")} />
         <CategoryChips selected={selectedCategory} onSelect={setSelectedCategory} />
         <HeroBanner photo={heroPhoto} />
