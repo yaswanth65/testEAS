@@ -5,14 +5,14 @@ interface ShimmerPlaceholderProps {
   width: number | string;
   height: number | string;
   borderRadius?: number;
-  className?: string;
+  style?: any;
 }
 
 export default function ShimmerPlaceholder({
   width,
   height,
   borderRadius = 12,
-  className = "",
+  style,
 }: ShimmerPlaceholderProps) {
   const opacity = useRef(new Animated.Value(0.3)).current;
 
@@ -39,8 +39,7 @@ export default function ShimmerPlaceholder({
 
   return (
     <Animated.View
-      style={[{ width: width as any, height: height as any, borderRadius, opacity }]}
-      className={`bg-dark-600 ${className}`}
+      style={[{ width: width as any, height: height as any, borderRadius, opacity, backgroundColor: "#2A2A2A" }, style]}
     />
   );
 }

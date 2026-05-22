@@ -6,7 +6,7 @@ interface NeonBorderProps {
   color?: string;
   width?: number;
   borderRadius?: number;
-  className?: string;
+  style?: any;
 }
 
 export default function NeonBorder({
@@ -14,12 +14,11 @@ export default function NeonBorder({
   color = "#8B5CF6",
   width = 1,
   borderRadius = 16,
-  className = "",
+  style,
 }: NeonBorderProps) {
   return (
     <View
-      className={className}
-      style={{
+      style={[{
         borderRadius,
         borderWidth: width,
         borderColor: color,
@@ -28,7 +27,7 @@ export default function NeonBorder({
         shadowOpacity: 0.6,
         shadowRadius: 12,
         elevation: 8,
-      }}
+      }, style]}
     >
       {children}
     </View>

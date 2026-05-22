@@ -43,7 +43,7 @@ export default function MasonryGrid({
   );
 
   return (
-    <View className="flex-row px-4" style={{ gap: 12 }}>
+    <View style={{ flexDirection: "row", paddingHorizontal: 16, gap: 12 }}>
       {columns.map((col, colIndex) => (
         <View key={colIndex} style={{ flex: 1, gap: 0 }}>
           {col.map((photo) => renderCard(photo))}

@@ -33,10 +33,14 @@ export default function RootLayout() {
 
   if (!isReady) {
     return (
-      <View className="flex-1 items-center justify-center" style={{ backgroundColor: "#0A0A0F" }}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#0A0A0F" }}>
         <View
-          className="w-16 h-16 rounded-full items-center justify-center"
           style={{
+            width: 64,
+            height: 64,
+            borderRadius: 9999,
+            alignItems: "center",
+            justifyContent: "center",
             backgroundColor: "rgba(139, 92, 246, 0.15)",
             borderWidth: 1,
             borderColor: "rgba(139, 92, 246, 0.2)",
@@ -47,7 +51,7 @@ export default function RootLayout() {
             elevation: 10,
           }}
         >
-          <Text className="text-2xl" style={{ color: "#A78BFA" }}>✦</Text>
+          <Text style={{ fontSize: 24, color: "#A78BFA" }}>✦</Text>
         </View>
       </View>
     );

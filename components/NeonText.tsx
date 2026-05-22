@@ -2,36 +2,38 @@ import { Text } from "react-native";
 
 interface NeonTextProps {
   children: string;
-  className?: string;
+  style?: any;
   color?: string;
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
   glow?: boolean;
 }
 
 const sizeMap = {
-  sm: "text-xs",
-  md: "text-sm",
-  lg: "text-base",
-  xl: "text-lg",
-  "2xl": "text-xl",
+  sm: 12,
+  md: 14,
+  lg: 16,
+  xl: 18,
+  "2xl": 20,
 };
 
 export default function NeonText({
   children,
-  className = "",
+  style,
   color,
   size = "md",
   glow = true,
 }: NeonTextProps) {
   return (
     <Text
-      className={`font-bold tracking-wide ${sizeMap[size]} ${className}`}
-      style={{
+      style={[{
+        fontWeight: "bold",
+        letterSpacing: 0.5,
+        fontSize: sizeMap[size],
         color: color || "#8B5CF6",
         textShadowColor: glow ? (color || "#8B5CF6") : "transparent",
         textShadowOffset: { width: 0, height: 0 },
         textShadowRadius: glow ? 10 : 0,
-      }}
+      }, style]}
     >
       {children}
     </Text>
