@@ -52,9 +52,7 @@ export default function CyberHomeScreen() {
     <View style={{ flex: 1, backgroundColor: COLORS.background }}>
       {/* Instagram-style top nav */}
       <View style={{ paddingHorizontal: 16, paddingTop: 56, paddingBottom: 8, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 0.5, borderBottomColor: "rgba(120,80,255,0.08)" }}>
-        <TouchableOpacity onPress={() => router.push("/camera")}>
-          <Ionicons name="camera-outline" size={26} color="#FFFFFF" />
-        </TouchableOpacity>
+        <View style={{ width: 40 }} />
         <Text style={{ color: "#FFFFFF", fontSize: 22, fontWeight: "bold", letterSpacing: -0.5 }}>CyberGram</Text>
         <TouchableOpacity onPress={() => router.push("/messages")}>
           <View style={{ position: "relative" }}>
